@@ -26,12 +26,12 @@ async def get_compliment(bio, username):
             Rule 3: Always refer to the account as you or your.
             Rule 4: Please try to keep it short.
             Rule 5: Write three sentences.
-            Rule 6: Start the sentence with 'I recently came across your Instagram page'.
+            Rule 6: Start the sentence with 'I recently came across your Instagram page', end with "Keep up the great work!"
             Rule 7: Again, don't be cringe, nor overly enthusiastic.
             Rule 8: do not be overly nice.
             Compliment:
             '''},
-            {'role': 'assistant', 'content': "I recently came across your Instagram page and was blown away by your illustrative works. Your portfolio showcases a truly unique style that stands out among the crowd. I admire the way you seamlessly combine detail and simplicity to create such stunning designs. Keep up the great work! If you're interested in discussing potential collaborations or commissions, please don't hesitate to reach out. I'd love to hear more about your creative process and see your work come to life."},
+            {'role': 'assistant', 'content': "I recently came across your Instagram page and was blown away by your illustrative works. Your portfolio showcases a truly unique style that stands out among the crowd. I admire the way you seamlessly combine detail and simplicity to create such stunning designs. Keep up the great work!"},
             {'role': 'user', 'content': f'''Instagram bio: Willkommen auf unserem offiziellen Account von chemoLine! Chemoline ist die Anlaufstelle für Chemie, Physik, Biologie und Mathematik. www.chemoline.de.
             Compliment:
             '''},
