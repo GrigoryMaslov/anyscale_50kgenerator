@@ -11,7 +11,7 @@ df = pd.read_excel(file_name)
 
 client = AsyncOpenAI(
     base_url="https://api.endpoints.anyscale.com/v1",
-    api_key='esecret_ni4db8h3lia8h6x4dlfseywhfj')
+    api_key='<YOUR SECRET API KEY HERE>')
 
 
 async def get_compliment(bio, username):
