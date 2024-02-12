@@ -18,7 +18,7 @@ df.reset_index(drop=True, inplace=True)
 # Initializing a client
 client = AsyncOpenAI(
     base_url="https://api.endpoints.anyscale.com/v1",
-    api_key='esecret_l1u7wsuj3ai8p1hqx4p3651mk7')
+    api_key='<YOUR SECRET API KEY HERE>')
 
 
 async def get_compliment(bio, username):
