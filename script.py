@@ -2,14 +2,16 @@ from openai import AsyncOpenAI
 import pandas as pd
 import time
 import asyncio
+from dotenv import load_dotenv
+import os
 
-file_name = '50kxlsx.xlsx'
+load_dotenv()
+file_name = os.getenv("FILE_PATH")
+api_key = os.getenv("ANYSCALE_API_KEY")
 
 # Fix for parsing output failure
 df = pd.read_excel(file_name)
-df = pd.read_excel(file_name)
 df['length'] = df.bio.str.len()
-
 df = df[df.length < 5000]
 del df["length"]
 df.reset_index(drop=True, inplace=True)
@@ -18,7 +20,7 @@ df.reset_index(drop=True, inplace=True)
 # Initializing a client
 client = AsyncOpenAI(
     base_url="https://api.endpoints.anyscale.com/v1",
-    api_key='<YOUR SECRET API KEY HERE>')
+    api_key=api_key)
 
 
 async def get_compliment(bio, username):
@@ -104,7 +106,7 @@ for batch in range(total_batches+1):
             # create new client
             client = AsyncOpenAI(
                 base_url="https://api.endpoints.anyscale.com/v1",
-                api_key='esecret_l1u7wsuj3ai8p1hqx4p3651mk7')
+                api_key=api_key)
 
             # and try again
             continue
