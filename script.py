@@ -16,6 +16,8 @@ df = df[df.length < 5000]
 del df["length"]
 df.reset_index(drop=True, inplace=True)
 
+# Here we choose the frequency of saving the output:
+save_every = 5000
 
 # Initializing a client
 client = AsyncOpenAI(
@@ -63,8 +65,11 @@ async def get_compliments(batch, leftover):
 
 total_batches = len(df)//30
 last_ones = len(df) % 30
+
 print("Total batches:", total_batches)
 start = time.time()
+
+row_count = 0
 
 for batch in range(total_batches+1):
     print("Logger: it's batch no.", batch)
@@ -78,15 +83,31 @@ for batch in range(total_batches+1):
                 for response in responses:
                     condition = (df['username'] == response[0])
                     df.loc[condition, 'compliment'] = response[1].strip(' "')
+                    row_count += 1
+                    if row_count % save_every == 0:
+                        start_index = (
+                            (row_count // save_every) - 1) * save_every
+                        end_index = ((row_count // save_every) * save_every)
+                        df.iloc[start_index:end_index].to_csv(
+                            f"result{row_count // save_every}.csv")
+                        print(f"Saving another 5k")
             else:
                 responses = asyncio.run(get_compliments(batch, 30))
                 for response in responses:
                     condition = (df['username'] == response[0])
                     df.loc[condition, 'compliment'] = response[1].strip(' "')
 
+                    # saving every 5000th row
+                    row_count += 1
+                    if row_count % save_every == 0:
+                        start_index = (
+                            (row_count // save_every) - 1) * save_every
+                        end_index = ((row_count // save_every) * save_every)
+                        df.iloc[start_index:end_index].to_csv(
+                            f"result{row_count // save_every}.csv")
+
                 if batch % 10 == 0:
                     end = time.time()
-                    df.to_csv('result.csv')
                     print(f'time consumed per 300 outputs: {end - start}')
                     start = time.time()
             break
@@ -112,4 +133,4 @@ for batch in range(total_batches+1):
             continue
 
 
-df.to_csv('result.csv')
+df.iloc[((row_count // save_every) * save_every):].to_csv(f"result{(row_count // save_every)+1}.csv")
